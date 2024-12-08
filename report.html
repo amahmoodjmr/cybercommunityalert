@@ -1,0 +1,40 @@
+<!-- templates/report.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report a Threat</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Community Cyber Threat Alert System</h1>
+    </header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/report">Report a Threat</a>
+        <a href="/logout">Logout</a>
+    </nav>
+    <div class="container">
+        <h2>Report a Threat</h2>
+{% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <form method="POST">
+            <label for="threat_type">Threat Type:</label>
+            <input type="text" id="threat_type" name="threat_type" required>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

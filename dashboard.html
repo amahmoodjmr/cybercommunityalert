@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script>
+        // Function to fetch real-time alerts
+        async function fetchAlerts() {
+            const response = await fetch('/api/alerts');
+            const alerts = await response.json();
+            const alertsContainer = document.getElementById('alerts');
+            alertsContainer.innerHTML = '<h3>Real-time Alerts</h3>';
+            alerts.forEach(alert => {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert';
+                alertDiv.innerHTML = `<p><strong>Alert:</strong> ${alert.message}</p><p><em>Timestamp: ${alert.timestamp}</em></p>`;
+                alertsContainer.appendChild(alertDiv);
+            });
+        }
+
+        // Function to fetch recent incident reports
+        async function fetchIncidentReports() {
+            const response = await fetch('/api/incident-reports');
+            const reports = await response.json();
+            const reportsContainer = document.getElementById('incident-reports');
+            reportsContainer.innerHTML = '<h3>Recent Incident Reports</h3><ul>';
+            reports.forEach(report => {
+                const reportItem = document.createElement('li');
+                reportItem.textContent = `${report.description} on ${report.timestamp}`;
+                reportsContainer.querySelector('ul').appendChild(reportItem);
+            });
+        }
+
+        // Fetch data periodically
+        setInterval(fetchAlerts, 5000); // Fetch alerts every 5 seconds
+        setInterval(fetchIncidentReports, 5000); // Fetch incident reports every 5 seconds
+
+        // Initial fetch
+        window.onload = () => {
+            fetchAlerts();
+            fetchIncidentReports();
+        };
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Community Cyber Threat Alert System</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/report">Report a Threat</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h2>Dashboard</h2>
+        
+        <!-- Real-time Alerts Section -->
+        <section id="alerts">
+            <h3>Real-time Alerts</h3>
+            <!-- Alerts will be dynamically added here -->
+        </section>
+        
+        <!-- Incident Reports Section -->
+        <section id="incident-reports">
+            <h3>Recent Incident Reports</h3>
+            <ul>
+                <!-- Reports will be dynamically added here -->
+            </ul>
+        </section>
+        
+        <!-- Resources Section -->
+        <section id="resources">
+            <h3>Resources</h3>
+            <ul>
+                <li><a href="C:\\Users\\ABUBAKAR SADEEQ\\Desktop\\community_cyber_alert\\templates\\training.html">Security Guidelines</a></li>
+                <li><a href="C:\\Users\\ABUBAKAR SADEEQ\\Desktop\\community_cyber_alert\\templates\\training.html">Emergency Contacts</a></li>
+                <li><a href="C:\\Users\\ABUBAKAR SADEEQ\\Desktop\\community_cyber_alert\\templates\\training.html">Training Materials</a></li>
+            </ul>
+        </section>
+        
+        <!-- User Profile Section -->
+        <section id="user-profile">
+            <h3>User Profile</h3>
+            <p><strong>First Name:</strong> {{ user.first_name }}</p>
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Last Login:</strong> {{ user.last_login }}</p>
+            <!-- Additional user details can be added here -->
+        </section>
+    </div>
+    <footer>
+        <p>© 2024 Error 404: Brain Not Found. All rights reserved.</p>
+    </footer>
+</body>
+</html>
