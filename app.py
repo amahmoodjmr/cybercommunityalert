@@ -112,7 +112,7 @@ def make_session_permanent():
 
 @app.route('/')
 def home():
-    return render('index.html')
+    return render_template('index.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -154,7 +154,7 @@ def register():
             flash('An error occurred during registration. Please try again.')
             return redirect(url_for('register'))
     
-    return('register.html')
+    return render_template('register.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
